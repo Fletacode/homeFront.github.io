@@ -6,8 +6,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 export default function Main() {
 
   return (
-    <>	
-	 
+    <>
+	 //드디어 git추가
 	 <Carousel style={{padding:'20px'}}>
 	   <Carousel.Item>
         <Image src="https://homeservice.run.goorm.site/images/TempProfile.jpg" 
