@@ -1,0 +1,1 @@
+export const serverurl = 'https://homeservice.run.goorm.site';
