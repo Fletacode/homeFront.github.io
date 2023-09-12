@@ -1,1 +1,3 @@
-export const serverurl = 'https://homeservice.run.goorm.site';
+const temp = 'https://bug-free-spoon-v7qv667gwqwhwvpp-7007.app.github.dev';
+const gcp = 'https://hardy-technique-398514.du.r.appspot.com';
+export const serverurl = temp;

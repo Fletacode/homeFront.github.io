@@ -58,6 +58,19 @@ export default function Join() {
 		})
 	}
 	
+	const ClickisLogin = ()=>{
+		axios.get(serverurl+"/auth/islogin").then((result)=>{
+            if (result.data.isSuccess){
+				console.log(result);
+            }else{
+                console.log(result);
+
+            }
+        }).catch((err)=>{
+            console.log(err);
+        })
+	}
+
 	
 	const iconStyle = {
     borderRadius: '100%', 
@@ -126,9 +139,9 @@ export default function Join() {
 					 <Button variant="primary" 
 						 style={{width:'100%',marginTop:'30px',marginBottom:'50px'}}
 						 onClick={()=>{ClickLogin()}}
-						 >로그인</Button>
+						 >로그</Button>
 				  </Form>
-				  
+				  <Button onClick={()=>{ClickisLogin()}}>islogin</Button>
 			  </div>
 			  
 			  <div className ={RegisterActiveCss2} aria-labelledby="tab-register">

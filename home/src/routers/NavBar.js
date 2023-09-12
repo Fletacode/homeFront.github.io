@@ -1,14 +1,31 @@
 import { Navbar,Container,Nav,Offcanvas,Image} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState} from 'react';
+import { useState,useEffect} from 'react';
 import { useNavigate} from 'react-router-dom';
-
-
+import axios from 'axios';
+import { serverurl } from './serverurl.js';
 
 export default function NavBar() {
 	const [profiles,setProfiles] = useState('');
-	 const navigate = useNavigate();
-	
+	const navigate = useNavigate();
+	console.log(profiles);
+	/*
+	useEffect(()=>{
+
+        axios.get(serverurl+"/auth/islogin").then((result)=>{
+            if (result.data.isSuccess){
+				setProfiles(result.data.user);
+            }else{
+                
+
+            }
+        }).catch((err)=>{
+            
+        })
+
+    },[])
+	*/
+
   return (
     <>
     <Navbar expand="lg" className="bg-body-tertiary">
@@ -20,7 +37,7 @@ export default function NavBar() {
               placement="end"
             > 
 			 <Offcanvas.Header closeButton>
-				 {(profiles) ? (<Profile></Profile>) : (<Offcanvas.Title  
+				 {(profiles) ? (<Profile profiles={profiles}></Profile>) : (<Offcanvas.Title  
 															onClick={()=>{navigate('/join')}}>
 															로그인하세요
 														</Offcanvas.Title>)}
@@ -44,7 +61,7 @@ export default function NavBar() {
 }
 
 
-function Profile(){
+function Profile(props){
 	return(
 	<>	
 		<div style={{display:'flex',alignItems: 'center'}}>
@@ -53,7 +70,7 @@ function Profile(){
 			height={55}
 			style={{padding:'10px'}}
 			alt={"프로필이미지 없음"}/>
-		<div>이름</div>
+		<div>{props.profiles}님 안녕하세요!</div>
 		</div>
 		
 	</>
