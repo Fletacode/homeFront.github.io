@@ -1,16 +1,20 @@
 
 import { Carousel,Image,Container,Row,Col} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import { serverurl } from './serverurl.js';
+import { useNavigate} from 'react-router-dom';
 
 export default function Main() {
+  const ProfileUrl = `${serverurl}/images/TempProfile.jpg`;
+  const homeImgUrl = `${serverurl}/images/homeIcon.jpg`;
+  const navigate = useNavigate();
 
   return (
     <>
 	
 	 <Carousel style={{padding:'20px'}}>
 	   <Carousel.Item>
-        <Image src="https://homeservice.run.goorm.site/images/TempProfile.jpg" 
+        <Image src={ProfileUrl}
 			height={200}
 			
 			alt={"프로필이미지 없음"}/>
@@ -20,7 +24,7 @@ export default function Main() {
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
-        <Image src="https://homeservice.run.goorm.site/images/TempProfile.jpg" 
+        <Image src={ProfileUrl}
 			height={200}
 			
 			alt={"프로필이미지 없음"}/>
@@ -30,7 +34,7 @@ export default function Main() {
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
-        <Image src="https://homeservice.run.goorm.site/images/TempProfile.jpg" 
+        <Image src={ProfileUrl} 
 			height={200}
 			
 			alt={"프로필이미지 없음"}/>
@@ -48,16 +52,17 @@ export default function Main() {
 	<Container style={{padding: '50px 5px 20px 5px'}}>
 	<Row>
         <Col style={{display:'flex',justifyContent: 'center'}}>
-			<Image src="https://homeservice.run.goorm.site/images/TempProfile.jpg" 
+			<Image src={ProfileUrl}
 			height={120}
 			roundedCircle
 			alt={"프로필이미지 없음"}/>
 		</Col>
-        <Col style={{display:'flex',justifyContent: 'center'}}>
-			<Image src="https://homeservice.run.goorm.site/images/TempProfile.jpg" 
+        <Col style={{display:'flex',justifyContent: 'center'}}
+             onClick={()=>{navigate('/boq')}}>
+			<Image src={homeImgUrl}
 			height={120}
 			roundedCircle
-			alt={"프로필이미지 없음"}/>
+			alt={"관사정보"}/>
 		</Col>
     </Row>		
 	</Container>			

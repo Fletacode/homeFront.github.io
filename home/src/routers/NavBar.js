@@ -5,7 +5,7 @@ import { useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import { serverurl } from './serverurl.js';
 
-export default function NavBar() {
+export function NavBar() {
 	const [profiles,setProfiles] = useState('');
 	const navigate = useNavigate();
 	console.log(profiles);
@@ -61,16 +61,16 @@ export default function NavBar() {
 }
 
 
-function Profile(props){
+export function Profile(props){
 	return(
 	<>	
 		<div style={{display:'flex',alignItems: 'center'}}>
-		<Image src="https://homeservice.run.goorm.site/images/TempProfile.jpg" 
+		<Image src={props.imgurl}
 			roundedCircle
 			height={55}
 			style={{padding:'10px'}}
 			alt={"프로필이미지 없음"}/>
-		<div>{props.profiles}님 안녕하세요!</div>
+		<div>{props.profiles.name}님</div>
 		</div>
 		
 	</>

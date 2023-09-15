@@ -139,9 +139,9 @@ export default function Join() {
 					 <Button variant="primary" 
 						 style={{width:'100%',marginTop:'30px',marginBottom:'50px'}}
 						 onClick={()=>{ClickLogin()}}
-						 >로그</Button>
+						 >로그인</Button>
 				  </Form>
-				  <Button onClick={()=>{ClickisLogin()}}>islogin</Button>
+				
 			  </div>
 			  
 			  <div className ={RegisterActiveCss2} aria-labelledby="tab-register">
