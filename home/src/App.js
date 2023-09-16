@@ -16,7 +16,7 @@ function App() {
 		  <Route path='/' element={<Main></Main> } />
 		  <Route path='/join' element={<Join></Join> } />
       <Route path='/boq' element={<Boq></Boq> } />
-      <Route path='/boq/:name' element={<BoqDetailed></BoqDetailed> } />
+      <Route path='/boq/:id' element={<BoqDetailed></BoqDetailed> } />
 	  </Routes>	  
     </>
   );

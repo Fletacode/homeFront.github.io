@@ -10,7 +10,7 @@ import axios from 'axios';
 import { useNavigate,useParams} from 'react-router-dom';
 
 export default function BoqDetailed() {
-	let {name} = useParams();
+	let {id} = useParams();
 	const [boq,setBoq] = useState({name:'햇님달님동',
                                     description:'햇남달님동입니다',
                                     imgurl:`${serverurl}/images/tempHomeDetiled.jpg`});
@@ -60,7 +60,7 @@ export default function BoqDetailed() {
 
 
     <Container className='mt-2' >
-        <h1>{name}</h1>
+        <h1>{id}</h1>
         <h3>{boq.description}~~</h3>
     </Container>
 
