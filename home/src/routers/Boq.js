@@ -1,7 +1,7 @@
 
-import {Container,Button,Image,Form ,Col,Row,Card} from 'react-bootstrap';
+import {Container,Button,Image,Form ,Col,Row,Card,Spinner} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState} from 'react';
+import { useEffect, useState} from 'react';
 
 import { serverurl } from './serverurl.js';
 import axios from 'axios';
@@ -10,9 +10,24 @@ import { useNavigate} from 'react-router-dom';
 export default function Boq() {
 	const navigate = useNavigate();
   
-	const [boqs,setBoqs] = useState([{name:'햇님달님동',
-                                    description:'햇남달님동입니다'}])
-	
+	const [boqs,setBoqs] = useState('');
+  
+
+  useEffect(()=>{
+    axios.get(serverurl+'/boq/info').then((result)=>{
+        console.log(result);
+        
+        if (result.data.isSuccess){
+          setBoqs(result.data.boqs);
+        }else{
+          throw result.data.isSuccess;
+        }
+        
+    }).catch((err)=>{
+      alert('boq정보를 받아올 수 없습니다.');
+    })
+  },[])
+                                         
 
   return (
     <>	
@@ -35,21 +50,9 @@ export default function Boq() {
      
       </Row>
 
-      {boqs.map((boq)=>{
-        return(
-        <>
-        <Card style={{ width: '100%' ,display:'flex', flexDirection:'row', justifyContent:'center'}}
-              onClick={()=>{navigate(`/boq/${boq.name}`)}}>
-        <Card.Img className="m-2" variant="top" src="holder.js/100px180" style={{width:'10rem'}}/>
-        <Card.Body>
-        <Card.Title>{boq.name}</Card.Title>
-        <Card.Text>{boq.description}</Card.Text>
-        </Card.Body>
-        </Card>
-
-        </>
-        )
-      })}
+      {(boqs) ? (<BoqList boqs={boqs}></BoqList>) :((<Spinner animation="border" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </Spinner>))}
 
       
       
@@ -62,10 +65,37 @@ export default function Boq() {
       
     </Container>
 	 			
-		
-	
     </>
   );
+}
+
+
+function BoqList(props){
+  const navigate = useNavigate();
+
+    return(
+    <>
+      {props.boqs.map((boq)=>{
+        return(
+        <>
+        <Card style={{ width: '100%' ,display:'flex', flexDirection:'row', justifyContent:'center'}}
+              onClick={()=>{navigate(`/boq/${boq._id}`)}}
+              key={boq._id}>
+        
+        <Card.Body>
+        <Card.Title>{boq.build_nm}</Card.Title>
+        <Card.Text>{boq.a_dvs} {boq.mng_unit}</Card.Text>
+        <Card.Text>{boq.sido} {boq.sigun} {boq.eupmyeon}</Card.Text>
+        </Card.Body>
+        </Card>
+
+        </>
+        )
+      })}
+    
+    </>
+
+    )
 }
 
 
