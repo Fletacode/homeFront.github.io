@@ -23,7 +23,7 @@ export default function Boq() {
 
   useEffect(()=>{
     axios.get(serverurl+`/boq/info/${stRange}`).then((result)=>{
-        console.log(result);
+      
         
         if (result.data.isSuccess){
           setMaxBoqLength(result.data.length);
@@ -42,9 +42,9 @@ export default function Boq() {
   
   const loadMoreData = ()=>{
     setStRange(stRange => stRange + 10);
-    console.log(boqs);
+    
     axios.get(serverurl+`/boq/info/${stRange}`).then((result)=>{
-      console.log(result);
+     
       
       if (result.data.isSuccess){
         
@@ -67,21 +67,22 @@ export default function Boq() {
       sido: searchSido,
       input:searchInput
     };
+    setStRange(0);
 
-    axios.get(serverurl+`/boq/search`,{params: queryParams}).then((result)=>{
-      console.log(result);
+    axios.get(serverurl+`/boq/search/${stRange}`,{params: queryParams}).then((result)=>{
+      
       
       if (result.data.isSuccess){
         
-        let temp = [...boqs];
-        temp.push(...result.data.boqs);
-        setBoqs(temp);
+       
+        setBoqs(result.data.boqs);
         if (boqs.length > maxBoqLength) setHasMore(false);
       }else{
         throw result.data.isSuccess;
       }
       
     }).catch((err)=>{
+      console.error(err);
       alert('boq정보를 받아올 수 없습니다.');
     })
   }
@@ -144,7 +145,7 @@ export default function Boq() {
 
       </Card>
 
-      
+    
       <InfiniteScroll
          dataLength={boqs.length}
          next={loadMoreData}
@@ -152,7 +153,7 @@ export default function Boq() {
          loader={<h4>Loading...</h4>}
       >
         {(boqs) ? (<BoqList boqs={boqs}></BoqList>) :((<Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
+            <span className="visually-hidden">조건에 맞는 검색결과가 없습니다</span>
         </Spinner>))}
 
 
@@ -181,7 +182,7 @@ function BoqList(props){
       {props.boqs.map((boq)=>{
         return(
         <>
-        <Card style={{ width: '100%' ,display:'flex', flexDirection:'row', justifyContent:'center'}}
+        <Card style={{ display:'flex', flexDirection:'row', justifyContent:'center',margin:'10px'}}
               onClick={()=>{navigate(`/boq/${boq._id}`)}}
               key={boq._id}>
         

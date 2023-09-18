@@ -1,7 +1,7 @@
 
-import {Container,Button,Image,Form ,Col,Row,Card,Carousel} from 'react-bootstrap';
+import {Container,Button,Image,Form ,Col,Row,Card,Carousel,Spinner} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState} from 'react';
+import { useEffect, useState} from 'react';
 
 import { serverurl } from './serverurl.js';
 import { Profile } from './NavBar.js';
@@ -9,12 +9,27 @@ import { Profile } from './NavBar.js';
 import axios from 'axios';
 import { useNavigate,useParams} from 'react-router-dom';
 
-export default function BoqDetailed() {
+export  function BoqDetailed() {
 	let {id} = useParams();
-	const [boq,setBoq] = useState({name:'햇님달님동',
-                                    description:'햇남달님동입니다',
-                                    imgurl:`${serverurl}/images/tempHomeDetiled.jpg`});
-    const [reviews, setReviews] = useState([{content:'시설이 조아요!',writer:'김**',time:'2023.03.31'}])
+  const tempImgUrl = `${serverurl}/images/tempHomeDetiled.jpg`;
+	const [boq,setBoq] = useState('');
+  const [reviews, setReviews] = useState([{content:'시설이 조아요!',writer:'김**',time:'2023.03.31'}])
+
+  
+
+  useEffect(()=>{
+    axios.get(serverurl+`/boq/detailinfo/${id}`)
+    .then((result)=>{
+        if (result.data.isSuccess){
+          setBoq(result.data.boq);
+        }else{
+          throw "err";
+        }
+    }).catch((err)=>{
+        alert("에러 입니다"+err);
+    })
+  },[])
+
 
   return (
     <>	
@@ -23,46 +38,43 @@ export default function BoqDetailed() {
       <div className='col-md-6' >
       <Carousel style={{padding:'20px'}}>
 	   <Carousel.Item>
-        <Image src={boq.imgurl}
-			height={200}
+        <Image src={tempImgUrl}
+			height={300}
 			
 			alt={"프로필이미지 없음"}/>
         <Carousel.Caption>
-          <h3>First slide label</h3>
-          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+          <h3>예시 사진</h3>
+        
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
-        <Image src={boq.imgurl}
-			height={200}
+        <Image src={tempImgUrl}
+			height={300}
 			
 			alt={"프로필이미지 없음"}/>
         <Carousel.Caption>
-          <h3>Second slide label</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <h3>예시 사진</h3>
+         
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
-        <Image src={boq.imgurl}
-			height={200}
+        <Image src={tempImgUrl}
+      height={300}
 			
 			alt={"프로필이미지 없음"}/>
         <Carousel.Caption>
-          <h3>Third slide label</h3>
-          <p>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-          </p>
+        <h3>예시 사진</h3>
+          
         </Carousel.Caption>
       </Carousel.Item> 
 	  
 	  
 	 </Carousel>
 
-
-    <Container className='mt-2' >
-        <h1>{id}</h1>
-        <h3>{boq.description}~~</h3>
-    </Container>
+    {(boq) ? (<BoqContent boq={boq}></BoqContent>) : (<Spinner animation="border" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </Spinner>)}
+    
 
     <div style={{    background: '#F8F9FA',
                 padding: '5px'}}></div>
@@ -107,6 +119,28 @@ export default function BoqDetailed() {
 	
     </>
   );
+}
+
+
+export function BoqContent(props){
+    return (
+      <>
+      <Container className='mt-2' >
+      
+        <h1>{props.boq.build_nm}</h1>
+        <h3>관리부대:{props.boq.a_dvs} {props.boq.mng_unit}</h3>
+        <h4>위치:{props.boq.sido} {props.boq.sigun} {props.boq.eupmyeon}</h4>
+
+        <div>공급세대:{props.boq.sply}</div>
+        <div>준공년도:{props.boq.build_year}</div>
+        {(props.boq.und20) ? (<div>20평미만 세대수:{props.boq.und20}</div>) : null}
+        {(props.boq.up20und30) ? (<div>20~30평 세대수:{props.boq.up20und30}</div>) : null}
+        {(props.boq.up30und40) ? (<div>30~40평 세대수:{props.boq.up30und40}</div>) : null}
+        {(props.boq.up40) ? (<div>40평이상 세대수:{props.boq.up40}</div>) : null}
+    </Container>
+      
+      </>
+    );
 }
 
 
