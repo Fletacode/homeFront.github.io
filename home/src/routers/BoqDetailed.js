@@ -1,10 +1,10 @@
 
-import {Container,Button,Image,Form ,Col,Row,Card,Carousel,Spinner} from 'react-bootstrap';
+import {Container,Button,Image,ListGroup ,Col,Row,Card,Carousel,Spinner} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useState} from 'react';
 
 import { serverurl } from './serverurl.js';
-import { Profile } from './NavBar.js';
+
 
 import axios from 'axios';
 import { useNavigate,useParams} from 'react-router-dom';
@@ -14,7 +14,7 @@ export  function BoqDetailed() {
   const tempImgUrl = `${serverurl}/images/tempHomeDetiled.jpg`;
 	const [boq,setBoq] = useState('');
   const [reviews, setReviews] = useState([{content:'시설이 조아요!',writer:'김**',time:'2023.03.31'}])
-
+  const [stations,setStations] = useState(['1']);
   
 
   useEffect(()=>{
@@ -74,6 +74,21 @@ export  function BoqDetailed() {
     {(boq) ? (<BoqContent boq={boq}></BoqContent>) : (<Spinner animation="border" role="status">
       <span className="visually-hidden">Loading...</span>
     </Spinner>)}
+
+    <Container className='mt-2'>
+    <h2>주변 시설</h2>
+    <ListGroup>
+    {stations.map((station)=>{
+      return(
+        <>
+        
+        <ListGroup.Item>Cras justo odio</ListGroup.Item>
+        
+        </>
+      )
+    })}
+    </ListGroup>
+    </Container>
     
 
     <div style={{    background: '#F8F9FA',

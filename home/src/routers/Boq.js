@@ -28,6 +28,7 @@ export default function Boq() {
         if (result.data.isSuccess){
           setMaxBoqLength(result.data.length);
           setBoqs(result.data.boqs);
+          
         }else{
           throw result.data.isSuccess;
         }
@@ -41,6 +42,13 @@ export default function Boq() {
   },[])
   
   const loadMoreData = ()=>{
+   
+
+    if (searchArmyType !== '군종류' || searchSido !== '시도' || searchInput){
+      searchBoq(false);
+
+    }else{
+
     setStRange(stRange => stRange + 10);
     
     axios.get(serverurl+`/boq/info/${stRange}`).then((result)=>{
@@ -51,7 +59,7 @@ export default function Boq() {
         let temp = [...boqs];
         temp.push(...result.data.boqs);
         setBoqs(temp);
-        if (boqs.length > maxBoqLength) setHasMore(false);
+        if (temp.length >= result.data.length-1) setHasMore(false);
       }else{
         throw result.data.isSuccess;
       }
@@ -59,24 +67,50 @@ export default function Boq() {
     }).catch((err)=>{
       alert('boq정보를 받아올 수 없습니다.');
     })
+
+  }
   }
 
-  const searchBoq = ()=>{
+  const searchBoq = (isFirst)=>{
+  
+   
+    
     const queryParams = {
       armyType: searchArmyType,
       sido: searchSido,
       input:searchInput
     };
-    setStRange(0);
+    if (isFirst) {
+      setStRange(0);
+      setHasMore(true);
+    }
+    else{
+     
+      setStRange(stRange => stRange + 10);
+    }
 
     axios.get(serverurl+`/boq/search/${stRange}`,{params: queryParams}).then((result)=>{
       
       
       if (result.data.isSuccess){
-        
        
-        setBoqs(result.data.boqs);
-        if (boqs.length > maxBoqLength) setHasMore(false);
+        let tempBoq = [...boqs];
+        if (isFirst){
+          console.log(result.data.boqs);
+          setBoqs(result.data.boqs);
+          setMaxBoqLength(result.data.length);
+          tempBoq = result.data.boqs;
+        }else{
+        
+          tempBoq.push(...result.data.boqs);
+          setBoqs(tempBoq);
+          setMaxBoqLength(result.data.length);
+        }
+        
+        if (tempBoq.length >= result.data.length-1) {
+          setHasMore(false);
+          
+        }
       }else{
         throw result.data.isSuccess;
       }
@@ -105,7 +139,7 @@ export default function Boq() {
              
             />
             <Button className="rounded-pill" variant="outline-primary"
-              onClick={()=>{searchBoq()}}>
+              onClick={()=>{searchBoq(true)}}>
               Search
             </Button>
           </Form>
@@ -150,11 +184,11 @@ export default function Boq() {
          dataLength={boqs.length}
          next={loadMoreData}
          hasMore={hasMore}
-         loader={<h4>Loading...</h4>}
+         loader={hasMore ? <h4>Loading...</h4> : null}
       >
-        {(boqs) ? (<BoqList boqs={boqs}></BoqList>) :((<Spinner animation="border" role="status">
-            <span className="visually-hidden">조건에 맞는 검색결과가 없습니다</span>
-        </Spinner>))}
+        {(boqs) ? (<BoqList boqs={boqs} kind={'boq'}></BoqList>) :
+          ((<Spinner animation="border" role="status">
+          </Spinner>))}
 
 
       </InfiniteScroll>
@@ -174,23 +208,27 @@ export default function Boq() {
 }
 
 
-function BoqList(props){
+export function BoqList(props){
   const navigate = useNavigate();
-
+  
     return(
     <>
       {props.boqs.map((boq)=>{
         return(
         <>
         <Card style={{ display:'flex', flexDirection:'row', justifyContent:'center',margin:'10px'}}
-              onClick={()=>{navigate(`/boq/${boq._id}`)}}
+              onClick={()=>{navigate(`/${props.kind}/${boq._id}`)}}
               key={boq._id}>
-        
-        <Card.Body>
+        {(props.kind == 'subscription') ?  (<><Card.Body>
+        <Card.Title>{boq.number}</Card.Title>
+        <Card.Text>{boq.name}</Card.Text>
+        <Card.Text>{boq.startDate} ~ {boq.finishDate}</Card.Text>
+        </Card.Body></>) : (<Card.Body>
         <Card.Title>{boq.build_nm}</Card.Title>
         <Card.Text>{boq.a_dvs} {boq.mng_unit}</Card.Text>
         <Card.Text>{boq.sido} {boq.sigun} {boq.eupmyeon}</Card.Text>
-        </Card.Body>
+        </Card.Body>)}
+        
         </Card>
 
         </>

@@ -51,11 +51,12 @@ export default function Main() {
 	 		
 	<Container style={{padding: '50px 5px 20px 5px'}}>
 	<Row>
-        <Col style={{display:'flex',justifyContent: 'center'}}>
+        <Col style={{display:'flex',justifyContent: 'center'}}
+             onClick={()=>{navigate('/subscrption')}}>
 			<Image src={ProfileUrl}
 			height={120}
 			roundedCircle
-			alt={"프로필이미지 없음"}/>
+			alt={"청약정보"}/>
 		</Col>
         <Col style={{display:'flex',justifyContent: 'center'}}
              onClick={()=>{navigate('/boq')}}>

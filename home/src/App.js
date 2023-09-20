@@ -6,7 +6,7 @@ import {NavBar }from './routers/NavBar.js';
 import Join from './routers/Join.js';
 import Boq from './routers/Boq.js';
 import {BoqDetailed} from './routers/BoqDetailed.js';
-
+import {Subscrption} from './routers/Subscrption.js';
 
 function App() {
   return (
@@ -17,6 +17,7 @@ function App() {
 		  <Route path='/join' element={<Join></Join> } />
       <Route path='/boq' element={<Boq></Boq> } />
       <Route path='/boq/:id' element={<BoqDetailed></BoqDetailed> } />
+      <Route path='/subscrption' element={<Subscrption></Subscrption>}></Route>
 	  </Routes>	  
     </>
   );
