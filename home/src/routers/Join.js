@@ -18,7 +18,10 @@ export default function Join() {
 	const [email,setEmail] = useState('');
 	const [idLogin,setIdLogin] = useState('');
 	const [pwLogin,setPwLogin] = useState('');
-	
+
+	const naverImgUrl = serverurl+'/images/naver_login_small.png';
+	const kakaoLoginImgUrl = serverurl+'/images/kakao_login_small.png';
+	const gooleLoginImgUrl  = serverurl+'/images/goole_login_small.png';
 	const ClickJoin = ()=>{
 		const joinData = {
 			id:idJoin,
@@ -96,16 +99,16 @@ export default function Join() {
 					<div class="text-center mb-3">
 						<p>Sign in with:</p>
 						
-						<Image src="https://homeservice.run.goorm.site/images/naver_login_small.png" 
+						<Image src={naverImgUrl}
 							height={40}
 							style={{margin:'0px 10px 10px 10px'}}
 					
-							alt={"구글로그인"}/>
-						<Image src="https://homeservice.run.goorm.site/images/kakao_login_small.png" 
+							alt={"네이버로그인"}/>
+						<Image src={kakaoLoginImgUrl} 
 							height={40}
 							style={{margin:'0px 10px 10px 10px'}}
 							alt={"카카오로그인"}/>
-						<Image src="https://homeservice.run.goorm.site/images/goole_login_small.png" 
+						<Image src={gooleLoginImgUrl}
 							height={40}
 							style={{margin:'0px 10px 10px 10px'}}
 							alt={"구글로그인"}/>
@@ -149,16 +152,16 @@ export default function Join() {
 					<div class="text-center mb-3">
 						<p>Sign in with:</p>
 						
-						<Image src="https://homeservice.run.goorm.site/images/naver_login_small.png" 
+						<Image src={naverImgUrl}
 							height={40}
 							style={{margin:'0px 10px 10px 10px'}}
 					
-							alt={"구글로그인"}/>
-						<Image src="https://homeservice.run.goorm.site/images/kakao_login_small.png" 
+							alt={"네이버로그인"}/>
+						<Image src={kakaoLoginImgUrl} 
 							height={40}
 							style={{margin:'0px 10px 10px 10px'}}
 							alt={"카카오로그인"}/>
-						<Image src="https://homeservice.run.goorm.site/images/goole_login_small.png" 
+						<Image src={gooleLoginImgUrl}
 							height={40}
 							style={{margin:'0px 10px 10px 10px'}}
 							alt={"구글로그인"}/>

@@ -9,6 +9,7 @@ export function NavBar() {
 	const [profiles,setProfiles] = useState('');
 	const navigate = useNavigate();
 	console.log(profiles);
+	const navLogourl = serverurl+'/images/navlogo.png';
 	/*
 	useEffect(()=>{
 
@@ -30,7 +31,11 @@ export function NavBar() {
     <>
     <Navbar expand="lg" className="bg-body-tertiary">
 	 <Container>
-	 	 <Navbar.Brand href="/">슬군생</Navbar.Brand>			
+	 	 <Navbar.Brand href="/"><Image src={navLogourl}
+			roundedCircle
+			height={55}
+			style={{padding:'10px'}}
+			alt={"프로필이미지 없음"}/></Navbar.Brand>			
 		 <Navbar.Toggle aria-controls="basic-navbar-nav" />
 		 <Navbar.Offcanvas
               aria-labelledby='basic-navbar-nav'
